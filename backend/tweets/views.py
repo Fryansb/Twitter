@@ -23,6 +23,12 @@ class TweetViewSet(viewsets.ModelViewSet):
         ).order_by('-created_at') | Tweet.objects.filter(
             author=user
         ).order_by('-created_at')
+    
+    def get_serializer_context(self):
+        """Garante que o request está disponível no serializer"""
+        context = super().get_serializer_context()
+        context['request'] = self.request
+        return context
 
     def perform_create(self, serializer):
         """Associa o tweet ao usuário autenticado."""

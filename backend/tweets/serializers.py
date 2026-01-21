@@ -11,13 +11,21 @@ class TweetSerializer(serializers.ModelSerializer):
     author_id = serializers.IntegerField(source='author.id', read_only=True)  # <- ID do autor
     timestamp = serializers.DateTimeField(source='created_at', read_only=True)
     is_following = serializers.SerializerMethodField()
-    total_likes = serializers.SerializerMethodField()  # opcional, se quiser exibir contador
+    likes_count = serializers.SerializerMethodField()  # contador de likes
+    liked_by_me = serializers.SerializerMethodField()  # se o usuário curtiu
+    replies_count = serializers.SerializerMethodField()  # contador de comentários
+    retweets_count = serializers.SerializerMethodField()  # contador de retweets (sempre 0 por enquanto)
+    handle = serializers.SerializerMethodField()  # handle do autor
 
     class Meta:
         model = Tweet
-        fields = ['id', 'content', 'username', 'author_id', 'timestamp', 'likes', 'is_following', 'total_likes']
+        fields = ['id', 'content', 'username', 'author_id', 'timestamp', 'is_following', 
+                  'likes_count', 'liked_by_me', 'replies_count', 'retweets_count', 'handle']
 
     def get_username(self, obj):
+        return obj.author.email.split("@")[0]
+
+    def get_handle(self, obj):
         return obj.author.email.split("@")[0]
 
     def get_is_following(self, obj):
@@ -26,8 +34,20 @@ class TweetSerializer(serializers.ModelSerializer):
             return obj.author.followers.filter(id=request.user.id).exists()
         return False
 
-    def get_total_likes(self, obj):
+    def get_likes_count(self, obj):
         return obj.likes.count()
+    
+    def get_liked_by_me(self, obj):
+        request = self.context.get('request')
+        if request and hasattr(request, 'user') and request.user.is_authenticated:
+            return obj.likes.filter(id=request.user.id).exists()
+        return False
+    
+    def get_replies_count(self, obj):
+        return obj.comments.count()
+    
+    def get_retweets_count(self, obj):
+        return 0  # funcionalidade não implementada ainda
 
 
 class CommentSerializer(serializers.ModelSerializer):
