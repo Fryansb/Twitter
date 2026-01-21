@@ -2,51 +2,166 @@
 
 Clone funcional do Twitter desenvolvido com **Django REST Framework** no backend e **React + TypeScript** no frontend.
 
-## 🚀 Funcionalidades
+## 🌐 **Links de Acesso**
+
+- **🖥️ Aplicação em Produção**: https://twitter-iota-sepia.vercel.app
+- **🔧 API Backend**: https://twitter-b01m.onrender.com/api
+- **📂 Repositório GitHub**: https://github.com/Fryansb/Twitter
+
+---
+
+## 🚀 Funcionalidades Implementadas
 
 ### ✅ **Sistema de Autenticação**
 - Cadastro e Login com JWT
 - Logout e gestão de sessões
+- Tokens de acesso e refresh
 
 ### ✅ **Sistema de Posts (Tweets)**
 - Criar tweets
-- Visualizar feed personalizado
+- Feed personalizado (mostra apenas quem você segue)
 - Curtir tweets
 - Comentar em posts
+- Contador de curtidas e comentários
 
 ### ✅ **Sistema Social**
-- Seguir/deixar de seguir usuários
+- **Seguir/deixar de seguir usuários**
+- **Buscar usuários por email**
 - Feed mostra apenas tweets de quem você segue
 - Lista de seguidores e seguidos
+- Indicador visual de "Seguindo" vs "Seguir"
 
 ### ✅ **Perfil de Usuário**
-- Editar perfil (email, bio, senha, avatar)
-- Upload de imagens
+- Editar perfil (email, bio, senha)
+- Upload de avatar (foto de perfil)
 - Visualização de estatísticas
+- Todas as alterações são opcionais
+
+---
 
 ## 🛠️ Tecnologias Utilizadas
 
 ### **Backend**
-- Python 3.12
-- Django 5.2.4
-- Django REST Framework
-- PostgreSQL 15 (Docker)
-- JWT Authentication
-- CORS Headers
+- **Python 3.10** (Render)
+- **Django 5.2.4**
+- **Django REST Framework 3.16.0**
+- **PostgreSQL** (Render)
+- **JWT Authentication** (djangorestframework-simplejwt)
+- **CORS Headers**
+- **WhiteNoise** (arquivos estáticos)
+- **Gunicorn** (servidor WSGI)
 
 ### **Frontend**
-- React 18 + TypeScript
-- Vite (Build tool)
-- TailwindCSS (Styling)
-- Zustand (State Management)
-- React Router (Navigation)
+- **React 18 + TypeScript**
+- **Vite** (Build tool)
+- **TailwindCSS** (Styling)
+- **Zustand** (State Management)
+- **React Router** (Navigation)
+- **Lucide React** (Ícones)
 
 ### **Infraestrutura**
-- Docker & Docker Compose
-- PostgreSQL Container
-- Python Virtual Environment
+- **Deploy Backend**: Render.com
+- **Deploy Frontend**: Vercel
+- **Banco de Dados**: PostgreSQL (Render)
+- **Desenvolvimento Local**: Docker + Docker Compose
 
-## 📦 Como Executar
+---
+
+## 🎮 **Como Usar a Aplicação (Produção)**
+
+### **1. Acesse a Aplicação**
+👉 **https://twitter-iota-sepia.vercel.app**
+
+### **2. Crie sua Conta**
+1. Clique em **"Sign up"**
+2. Preencha seu **email** e **senha**
+3. Confirme a senha
+4. Clique em **"Cadastrar"**
+
+### **3. Faça Login**
+1. Use o email e senha cadastrados
+2. Clique em **"Entrar"**
+
+### **4. Como Seguir Usuários**
+Como o feed mostra apenas tweets de quem você segue, primeiro você precisa seguir alguém:
+
+1. Clique em **"Buscar"** no menu lateral
+2. Digite o **email completo** ou parte dele de outro usuário
+3. Clique em **"Seguir"** ao lado do usuário encontrado
+4. Volte para **"Home"** 
+5. ✅ Agora você verá os tweets dessa pessoa no seu feed!
+
+### **5. Publicar um Tweet**
+1. No campo **"What's happening?"** no topo
+2. Digite sua mensagem
+3. Clique em **"Tweet"**
+
+### **6. Interagir com Posts**
+- ❤️ **Curtir**: Clique no coração
+- 💬 **Comentar**: Digite no campo abaixo do tweet
+- 👤 **Seguir autor**: Clique no botão ao lado do nome
+
+### **7. Editar seu Perfil**
+1. Clique em **"Profile"** no menu
+2. Altere **email**, **bio**, ou **senha**
+3. Faça upload de uma **foto de perfil**
+4. Clique em **"Salvar"**
+
+---
+
+## 📝 **Endpoints da API**
+
+### **Autenticação**
+- `POST /api/users/signup/` - Criar conta
+- `POST /api/users/token/` - Login (obter JWT)
+- `POST /api/users/token/refresh/` - Refresh token
+
+### **Usuários**
+- `GET /api/users/profile/` - Ver perfil do usuário logado
+- `PATCH /api/users/profile/` - Atualizar perfil
+- `GET /api/users/search/?q=<email>` - Buscar usuários por email
+- `GET /api/users/followers-following/` - Ver seguidores e seguindo
+- `POST /api/users/toggle-follow/<user_id>/` - Seguir/desseguir
+
+### **Tweets**
+- `GET /api/tweets/` - Listar tweets do feed
+- `POST /api/tweets/` - Criar tweet
+- `POST /api/tweets/<id>/like_tweet/` - Curtir/descurtir
+- `GET /api/tweets/<id>/comments/` - Listar comentários
+- `POST /api/tweets/<id>/add_comment/` - Adicionar comentário
+
+---
+
+## 🏗️ **Arquitetura**
+
+```
+┌─────────────────────────────────────┐
+│   Frontend (Vercel)                 │
+│   https://twitter-iota-sepia...     │
+│                                     │
+│   React + TypeScript + TailwindCSS  │
+└──────────────┬──────────────────────┘
+               │ HTTPS/REST API
+               │ JWT Authentication
+               ▼
+┌─────────────────────────────────────┐
+│   Backend API (Render)              │
+│   https://twitter-b01m.onrender...  │
+│                                     │
+│   Django REST Framework             │
+└──────────────┬──────────────────────┘
+               │
+               ▼
+┌─────────────────────────────────────┐
+│   PostgreSQL Database (Render)      │
+│                                     │
+│   Usuários, Tweets, Comentários     │
+└─────────────────────────────────────┘
+```
+
+---
+
+## 📦 Como Executar Localmente
 
 ### **Pré-requisitos**
 - Python 3.12+
@@ -131,16 +246,40 @@ twiter/
 └── package.json            # Configuração geral do projeto
 ```
 
-## 🚢 Deploy
+## 🚢 Deploy---
 
-### **Desenvolvimento vs Produção**
-O projeto detecta automaticamente o ambiente:
-- **Desenvolvimento**: APIs apontam para `localhost`
-- **Produção**: APIs apontam para servidor de produção
+## ✅ **Requisitos da Atividade Atendidos**
+
+- [x] **Sistema de Autenticação e Criação de Conta** ✅
+  - Cadastro e login seguros com JWT
+  - Gestão de sessões e tokens
+  
+- [x] **Configuração de Perfil** ✅
+  - Alteração de foto de perfil, nome e senha
+  - Todas as alterações são opcionais
+  - Upload de imagens funcional
+  
+- [x] **Sistema de Seguir e Feed de Notícias** ✅
+  - Seguir outros usuários
+  - Ver lista de seguidos e seguidores
+  - Feed mostra **apenas** postagens de quem você segue
+  - Página de busca de usuários por email
+  
+- [x] **Interações nas Postagens** ✅
+  - Curtidas em tweets
+  - Comentários em posts
+  - Contadores de interações
+  
+- [x] **Deploy e Entrega Final** ✅
+  - Aplicação hospedada e online
+  - Código no GitHub com instruções
+  - README completo
+
+---
 
 ## 🤝 Contribuição
 
-Projeto desenvolvido como clone educacional do Twitter.
+Projeto desenvolvido como trabalho acadêmico - Clone educacional do Twitter.
 
 ## 📄 Licença
 
@@ -148,155 +287,18 @@ Este projeto está sob a licença MIT.
 
 ## 🏆 Desenvolvido com
 
-- ❤️ Django REST Framework
-- ⚛️ React + TypeScript  
-- 🎨 TailwindCSS
-- 🐘 PostgreSQL
-- 🐳 Docker
+- ❤️ **Django REST Framework** - Backend robusto
+- ⚛️ **React + TypeScript** - Frontend moderno
+- 🎨 **TailwindCSS** - Estilização profissional
+- 🐘 **PostgreSQL** - Banco de dados confiável
+- 🚀 **Render + Vercel** - Deploy em produção
+- 🔐 **JWT** - Autenticação segura
 
-Django Rest Framework
+---
 
-Autenticação via JWT
+## 📬 **Contato**
 
-CORS Headers configurado para integração com Vercel
+Projeto desenvolvido como trabalho acadêmico.
 
-WhiteNoise para servir arquivos estáticos
+**GitHub**: https://github.com/Fryansb/Twitter
 
-Variáveis de ambiente via .env
-
-Banco:
-
-Desenvolvimento: PostgreSQL (Docker)
-
-Produção: PostgreSQL ou SQLite (depende do serviço de hospedagem)
-
-🌐 Frontend (React)
-
-React 18 + Vite
-
-Tailwind CSS
-
-React Router
-
-Zustand para gerenciamento de estado
-
-Configuração automática de API (dev/prod) em src/config/api.ts
-
-
-Deploy automático pela Vercel
-
-⚙️ Configuração do Ambiente de Desenvolvimento
-🔧 Backend
-1️⃣ Clonar o repositório
-git clone <seu-repositorio>
-cd <nome-do-projeto>/backend
-
-2️⃣ Criar ambiente virtual
-python3 -m venv venv
-source venv/bin/activate  # Linux/Mac
-# ou
-venv\Scripts\activate  # Windows
-
-3️⃣ Instalar dependências
-pip install -r requirements.txt
-
-4️⃣ Migrações do banco
-python manage.py makemigrations
-python manage.py migrate
-
-5️⃣ Criar superusuário
-python manage.py createsuperuser
-
-6️⃣ Rodar servidor local
-python manage.py runserver 8001
-
-💻 Frontend
-1️⃣ Entrar no diretório
-cd frontend
-
-2️⃣ Instalar dependências
-npm install
-
-3️⃣ O frontend detecta automaticamente o ambiente
-Em desenvolvimento, usa http://localhost:8001/api
-Em produção, configure sua URL de produção no api.ts
-
-4️⃣ Rodar servidor de desenvolvimento
-npm run dev
-
-☁️ Deploy
-🐍 Backend
-
-Recomendações:
-- Railway (gratuito com $5/mês de créditos)
-- Render (plano gratuito disponível)
-- Vercel (para frontend apenas)
-
-Configure sua URL de produção em:
-
-WSGI
-
-ALLOWED_HOSTS
-
-CSRF_TRUSTED_ORIGINS
-
-WhiteNoise
-
-Webhook configurado para receber updates do GitHub (opcional)
-
-⚛️ Frontend – Vercel
-Configurações:
-
-Build Command:
-
-npm run build
-
-
-Install Command:
-
-npm install
-
-
-Output Directory:
-
-dist
-
-
-O frontend detecta automaticamente o ambiente (dev/prod)
-
-🧪 Testes
-
-Para executar os testes automatizados no backend:
-
-python manage.py test
-
-🛠️ Tecnologias Utilizadas
-Backend
-
-Django 5.x
-
-Django REST Framework
-
-Simple JWT
-
-WhiteNoise
-
-CORS Headers
-
-Docker
-
-PostgreSQL / SQLite
-
-Frontend
-
-React 18
-
-Vite
-
-Tailwind CSS
-
-React Router
-
-Zustand
-
-Axios / Fetch
