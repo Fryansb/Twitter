@@ -3,7 +3,7 @@ const isDevelopment = import.meta.env.DEV || window.location.hostname === 'local
 
 const API_BASE_URL = isDevelopment 
   ? 'http://localhost:8001/api'
-  : 'https://seu-backend-em-producao.com/api'; // Configure sua URL de produção aqui
+  : 'https://twitter-production-0bb6.up.railway.app/api';
 
 export const API_ENDPOINTS = {
   LOGIN: `${API_BASE_URL}/users/token/`,
