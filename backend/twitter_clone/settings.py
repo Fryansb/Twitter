@@ -21,6 +21,7 @@ ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
     ".railway.app",  # Permite todos os subdomínios do Railway
+    ".onrender.com",  # Permite todos os subdomínios do Render
     # Adicione aqui seus domínios de produção customizados
 ]
 
