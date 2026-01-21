@@ -157,3 +157,29 @@ def search_users(request):
         })
     
     return Response({'results': results}, status=200)
+
+
+# -------------------------------
+# Endpoint temporário para listar todos os usuários (debug)
+# -------------------------------
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def list_all_users(request):
+    """Lista todos os usuários do sistema (para debug)"""
+    users = User.objects.all()
+    
+    results = []
+    for user in users:
+        results.append({
+            'id': user.id,
+            'email': user.email,
+            'username': user.email.split('@')[0],
+            'bio': user.bio or '',
+            'followers_count': user.followers.count(),
+            'following_count': user.following.count(),
+        })
+    
+    return Response({
+        'total': len(results),
+        'users': results
+    }, status=200)
