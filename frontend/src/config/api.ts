@@ -14,6 +14,7 @@ export const API_ENDPOINTS = {
   TOGGLE_FOLLOW: (userId: number) => `${API_BASE_URL}/users/toggle-follow/${userId}/`,
   TWEET_COMMENTS: (id: number) => `${API_BASE_URL}/tweets/${id}/comments/`,
   ADD_COMMENT: (id: number) => `${API_BASE_URL}/tweets/${id}/add_comment/`,
+  FOLLOWERS_FOLLOWING: `${API_BASE_URL}/users/followers-following/`,
 };
 
 export default API_BASE_URL;
