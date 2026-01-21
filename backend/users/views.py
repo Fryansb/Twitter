@@ -129,3 +129,31 @@ def followers_following(request):
         'following': following_data,
         'following_count': len(following_data)
     }, status=200)
+
+
+# -------------------------------
+# Endpoint de busca de usuários por email
+# -------------------------------
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def search_users(request):
+    """Busca usuários por email (partial match)"""
+    query = request.query_params.get('q', '').strip()
+    
+    if not query:
+        return Response({'results': []}, status=200)
+    
+    # Busca usuários cujo email contém a query (case-insensitive)
+    users = User.objects.filter(email__icontains=query).exclude(id=request.user.id)[:10]
+    
+    results = []
+    for user in users:
+        results.append({
+            'id': user.id,
+            'email': user.email,
+            'username': user.email.split('@')[0],
+            'bio': user.bio or '',
+            'is_following': user.followers.filter(id=request.user.id).exists()
+        })
+    
+    return Response({'results': results}, status=200)

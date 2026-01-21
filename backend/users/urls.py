@@ -9,7 +9,8 @@ from .views import (
     MyTokenObtainPairView,
     profile,
     toggle_follow,
-    followers_following
+    followers_following,
+    search_users
 )
 
 router = routers.SimpleRouter()
@@ -22,6 +23,7 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('toggle-follow/<int:user_id>/', toggle_follow, name='toggle-follow'),
     path('followers-following/', followers_following, name='followers-following'),
+    path('search/', search_users, name='search-users'),
 
     # Sempre dejar o router por último!
     path('', include(router.urls)),

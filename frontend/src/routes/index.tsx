@@ -5,6 +5,7 @@ import { Login } from '../pages/Login';
 import { Signup } from '../pages/Signup';
 import { Feed } from '../pages/Feed';
 import { Profile } from '../pages/Profile'; // Nova página de perfil
+import { Search } from '../pages/Search'; // Nova página de busca
 import { useAuth } from '../hooks/useAuth';
 
 // Rota protegida: só acessível se estiver autenticado
@@ -44,6 +45,14 @@ const router = createBrowserRouter([
         element: (
             <ProtectedRoute>
                 <Profile />
+            </ProtectedRoute>
+        ),
+    },
+    {
+        path: '/search', // Nova rota para busca de usuários
+        element: (
+            <ProtectedRoute>
+                <Search />
             </ProtectedRoute>
         ),
     },
