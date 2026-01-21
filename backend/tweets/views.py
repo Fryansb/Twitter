@@ -9,9 +9,20 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.decorators import api_view, permission_classes
 
 class TweetViewSet(viewsets.ModelViewSet):
-    queryset = Tweet.objects.all().order_by('-created_at')
     serializer_class = TweetSerializer
     permission_classes = [permissions.IsAuthenticated]  # padrão para todo o ViewSet
+
+    def get_queryset(self):
+        """Retorna tweets apenas de usuários que o user logado segue + seus próprios tweets"""
+        user = self.request.user
+        # Usuários que o user está seguindo
+        following_users = user.following.all()
+        # Tweets de quem você segue + seus próprios tweets
+        return Tweet.objects.filter(
+            author__in=following_users
+        ).order_by('-created_at') | Tweet.objects.filter(
+            author=user
+        ).order_by('-created_at')
 
     def perform_create(self, serializer):
         """Associa o tweet ao usuário autenticado."""

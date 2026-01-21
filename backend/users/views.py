@@ -104,3 +104,28 @@ def toggle_follow(request, user_id):
         'is_following': is_following,
         'followers_count': target_user.followers.count()
     }, status=200)
+
+
+# -------------------------------
+# Endpoint de lista de seguidores e seguindo
+# -------------------------------
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def followers_following(request):
+    """Retorna lista de seguidores e quem o usuário está seguindo"""
+    user = request.user
+    
+    # Lista de quem me segue (seguidores)
+    followers = user.followers.all()
+    followers_data = [{'id': u.id, 'email': u.email, 'username': u.email.split('@')[0]} for u in followers]
+    
+    # Lista de quem eu sigo (seguindo)
+    following = user.following.all()
+    following_data = [{'id': u.id, 'email': u.email, 'username': u.email.split('@')[0]} for u in following]
+    
+    return Response({
+        'followers': followers_data,
+        'followers_count': len(followers_data),
+        'following': following_data,
+        'following_count': len(following_data)
+    }, status=200)
