@@ -1,11 +1,14 @@
 [phases.setup]
-nixPkgs = ["python310", "python310Packages.pip", "python310Packages.setuptools", "python310Packages.wheel", "postgresql"]
-nixLibs = ["gcc-unwrapped"]
+nixPkgs = ["python310", "python310Packages.pip", "python310Packages.virtualenv", "postgresql"]
 
 [phases.install]
-cmds = ["cd backend && pip install -r requirements.txt --no-cache-dir"]
+cmds = [
+    "cd backend && python -m venv /opt/venv",
+    "cd backend && /opt/venv/bin/pip install --upgrade pip",
+    "cd backend && /opt/venv/bin/pip install -r requirements.txt"
+]
 
 [phases.build]
 
 [start]
-cmd = "cd backend && python manage.py migrate && gunicorn twitter_clone.wsgi --bind 0.0.0.0:$PORT"
+cmd = "cd backend && /opt/venv/bin/python manage.py migrate && /opt/venv/bin/gunicorn twitter_clone.wsgi --bind 0.0.0.0:$PORT"
