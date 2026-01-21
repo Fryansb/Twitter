@@ -119,9 +119,28 @@ Como o feed mostra apenas tweets de quem você segue, primeiro você precisa seg
 ### **Acessar o Admin**
 👉 **https://twitter-b01m.onrender.com/admin/**
 
-### **Credenciais Padrão**
-- **Email**: `admin@twitter.com`
-- **Senha**: `admin123456`
+### **Como Criar um Superusuário**
+
+Como o banco foi resetado, você precisa criar um superusuário manualmente:
+
+**Opção 1: Via Render Shell**
+1. Acesse https://dashboard.render.com
+2. Entre no seu serviço backend
+3. Clique em "Shell" no menu
+4. Execute:
+```bash
+python manage.py createsuperuser
+```
+5. Digite o email (ex: admin@twitter.com)
+6. Digite a senha duas vezes
+
+**Opção 2: Via Código (criar usuário pela API)**
+1. Crie uma conta normal pelo frontend
+2. Acesse o banco de dados no Render
+3. Execute SQL:
+```sql
+UPDATE users_user SET is_staff = true, is_superuser = true WHERE email = 'seu@email.com';
+```
 
 ### **O que você pode fazer no Admin:**
 - ✅ Ver todos os usuários cadastrados
@@ -130,8 +149,6 @@ Como o feed mostra apenas tweets de quem você segue, primeiro você precisa seg
 - ✅ Gerenciar contas (ativar/desativar)
 - ✅ Ver estatísticas detalhadas
 - ✅ Editar/deletar qualquer conteúdo
-
-**Observação**: O superusuário é criado automaticamente no deploy do Render.
 
 ---
 
