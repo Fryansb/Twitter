@@ -119,16 +119,9 @@ export function Tweet({
     // ---------------------- Comentários ----------------------
     useEffect(() => {
         const fetchComments = async () => {
-            if (!token) return;
-            
             try {
                 const resp = await fetch(
-                    API_ENDPOINTS.TWEET_COMMENTS(id as number),
-                    {
-                        headers: {
-                            'Authorization': `Bearer ${token}`,
-                        },
-                    }
+                    API_ENDPOINTS.TWEET_COMMENTS(id as number)
                 );
                 if (!resp.ok) throw new Error('Erro ao buscar comentários');
                 const data = await resp.json();
@@ -138,7 +131,7 @@ export function Tweet({
             }
         };
         fetchComments();
-    }, [id, token]);
+    }, [id]);
 
     const handleAddComment = async () => {
         if (!token || !commentText.trim()) return;

@@ -107,6 +107,32 @@ Como o feed mostra apenas tweets de quem você segue, primeiro você precisa seg
 3. Faça upload de uma **foto de perfil**
 4. Clique em **"Salvar"**
 
+### **8. Ver Seguidores e Seguindo**
+1. No seu **"Profile"**
+2. Clique na aba **"Conexões"**
+3. Veja a lista de quem te segue e quem você segue
+
+---
+
+## 🔐 **Painel Admin (Django)**
+
+### **Acessar o Admin**
+👉 **https://twitter-b01m.onrender.com/admin/**
+
+### **Credenciais Padrão**
+- **Email**: `admin@twitter.com`
+- **Senha**: `admin123456`
+
+### **O que você pode fazer no Admin:**
+- ✅ Ver todos os usuários cadastrados
+- ✅ Ver total de tweets
+- ✅ Ver total de comentários
+- ✅ Gerenciar contas (ativar/desativar)
+- ✅ Ver estatísticas detalhadas
+- ✅ Editar/deletar qualquer conteúdo
+
+**Observação**: O superusuário é criado automaticamente no deploy do Render.
+
 ---
 
 ## 📝 **Endpoints da API**
