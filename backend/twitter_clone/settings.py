@@ -74,9 +74,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:3000",
     "http://127.0.0.1:5173",
-    "https://*.vercel.app",  # Se hospedar frontend no Vercel
-    "https://*.railway.app",  # Se hospedar frontend no Railway
-    # Adicione aqui suas URLs de produção do frontend
+    "https://twitter-iota-sepia.vercel.app",  # Frontend em produção
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -103,7 +101,7 @@ CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:3000",
     "http://127.0.0.1:5173",
-    # Adicione aqui suas URLs de produção do frontend
+    "https://twitter-iota-sepia.vercel.app",  # Frontend em produção
 ]
 
 # --------------------------------------------------------------
