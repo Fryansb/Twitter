@@ -24,6 +24,7 @@ export interface TweetType {
     handle?: string;
     liked_by_me: boolean;
     retweets_count: number;
+    avatar_url?: string | null; // URL do avatar do autor
 }
 
 

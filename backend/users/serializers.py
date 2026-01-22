@@ -49,9 +49,19 @@ class UserSerializer(serializers.ModelSerializer):
     """
     Serializador para listar ou detalhar informações de um usuário.
     """
+    avatar_url = serializers.SerializerMethodField()
+    
     class Meta:
         model = User
-        fields = ['id', 'email', 'bio', 'avatar']
+        fields = ['id', 'email', 'bio', 'avatar', 'avatar_url']
+    
+    def get_avatar_url(self, obj):
+        if obj.avatar:
+            request = self.context.get('request')
+            if request:
+                return request.build_absolute_uri(obj.avatar.url)
+            return obj.avatar.url
+        return None
 
 class UserUpdateSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=False)

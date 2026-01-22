@@ -26,6 +26,7 @@ export function TweetList() {
                     liked={tweet.liked_by_me || false}
                     userId={tweet.author_id}          // 🔹 aqui
                     isFollowing={tweet.is_following} // 🔹 aqui
+                    avatarUrl={tweet.avatar_url}      // 🔹 avatar
                 />
             ))}
         </div>

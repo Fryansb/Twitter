@@ -16,6 +16,7 @@ interface TweetProps {
     liked?: boolean;
     userId?: number | string; // <-- AQUI: ID do autor do tweet (necessário para seguir)
     isFollowing?: boolean; // <-- usado para iniciar o estado do botão
+    avatarUrl?: string | null; // URL do avatar do autor
 }
 
 interface Comment {
@@ -36,6 +37,7 @@ export function Tweet({
     liked: initialLiked = false,
     userId, // <-- AQUI
     isFollowing: initialIsFollowing = false, // <- aqui
+    avatarUrl, // URL do avatar
 }: TweetProps) {
     const [liked, setLiked] = useState(initialLiked);
     const [likeCount, setLikeCount] = useState(likes);
@@ -169,9 +171,9 @@ export function Tweet({
         <div className="border-b border-gray-800 p-4 hover:bg-gray-900/50">
             <div className="flex space-x-4">
                 <img
-                    src="https://img.freepik.com/premium-vector/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-vector-illustration_561158-3467.jpg"
+                    src={avatarUrl || "https://img.freepik.com/premium-vector/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-vector-illustration_561158-3467.jpg"}
                     alt={username}
-                    className="h-12 w-12 rounded-full"
+                    className="h-12 w-12 rounded-full object-cover"
                 />
                 <div className="flex-1">
                     <div className="flex items-center justify-between">

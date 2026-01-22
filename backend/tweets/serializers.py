@@ -16,17 +16,26 @@ class TweetSerializer(serializers.ModelSerializer):
     replies_count = serializers.SerializerMethodField()  # contador de comentários
     retweets_count = serializers.SerializerMethodField()  # contador de retweets (sempre 0 por enquanto)
     handle = serializers.SerializerMethodField()  # handle do autor
+    avatar_url = serializers.SerializerMethodField()  # avatar do autor
 
     class Meta:
         model = Tweet
         fields = ['id', 'content', 'username', 'author_id', 'timestamp', 'is_following', 
-                  'likes_count', 'liked_by_me', 'replies_count', 'retweets_count', 'handle']
+                  'likes_count', 'liked_by_me', 'replies_count', 'retweets_count', 'handle', 'avatar_url']
 
     def get_username(self, obj):
         return obj.author.email.split("@")[0]
 
     def get_handle(self, obj):
         return obj.author.email.split("@")[0]
+    
+    def get_avatar_url(self, obj):
+        if obj.author.avatar:
+            request = self.context.get('request')
+            if request:
+                return request.build_absolute_uri(obj.author.avatar.url)
+            return obj.author.avatar.url
+        return None
 
     def get_is_following(self, obj):
         request = self.context.get('request')
