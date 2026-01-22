@@ -15,6 +15,9 @@ urlpatterns = [
     path("hello/", views.hello_world, name="hello_world"),
 ]
 
-# Servir arquivos de mídia em desenvolvimento e produção
-if settings.DEBUG or True:  # Sempre servir arquivos de mídia
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# Servir arquivos de mídia (uploads) em desenvolvimento e produção
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# Servir arquivos estáticos em desenvolvimento
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
