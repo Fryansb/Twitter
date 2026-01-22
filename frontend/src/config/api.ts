@@ -6,7 +6,7 @@ const API_BASE_URL = isDevelopment
   : 'https://twitter-b01m.onrender.com/api';
 
 export const API_ENDPOINTS = {
-  LOGIN: `${API_BASE_URL}/users/token/`,
+  LOGIN: `${API_BASE_URL}/token/`,
   SIGNUP: `${API_BASE_URL}/users/signup/`,
   PROFILE: `${API_BASE_URL}/users/profile/`,
   TWEETS: `${API_BASE_URL}/tweets/`,
