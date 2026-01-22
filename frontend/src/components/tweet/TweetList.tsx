@@ -8,6 +8,9 @@ export function TweetList() {
 
     useEffect(() => {
         console.log("Tweets renderizados:", tweets);
+        if (tweets.length > 0) {
+            console.log("Avatar URL do primeiro tweet:", tweets[0].avatar_url);
+        }
     }, [tweets]);
 
     return (

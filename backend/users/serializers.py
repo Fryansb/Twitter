@@ -66,10 +66,20 @@ class UserSerializer(serializers.ModelSerializer):
 class UserUpdateSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=False)
     avatar = serializers.ImageField(required=False)
+    avatar_url = serializers.SerializerMethodField()
 
     class Meta:
         model = User
-        fields = ['email', 'first_name', 'last_name', 'bio', 'avatar', 'password']
+        fields = ['email', 'first_name', 'last_name', 'bio', 'avatar', 'avatar_url', 'password']
+        read_only_fields = ['avatar_url']
+    
+    def get_avatar_url(self, obj):
+        if obj.avatar:
+            request = self.context.get('request')
+            if request:
+                return request.build_absolute_uri(obj.avatar.url)
+            return obj.avatar.url
+        return None
 
     def update(self, instance, validated_data):
         password = validated_data.pop('password', None)
