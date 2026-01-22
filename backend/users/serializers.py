@@ -60,7 +60,13 @@ class UserSerializer(serializers.ModelSerializer):
             request = self.context.get('request')
             if request:
                 return request.build_absolute_uri(obj.avatar.url)
-            return obj.avatar.url
+            # Fallback: construir URL completa usando settings
+            from django.conf import settings
+            if hasattr(settings, 'BACKEND_URL'):
+                base_url = settings.BACKEND_URL
+            else:
+                base_url = 'https://twitter-b01m.onrender.com'
+            return f"{base_url}{obj.avatar.url}"
         return None
 
 class UserUpdateSerializer(serializers.ModelSerializer):
@@ -78,7 +84,13 @@ class UserUpdateSerializer(serializers.ModelSerializer):
             request = self.context.get('request')
             if request:
                 return request.build_absolute_uri(obj.avatar.url)
-            return obj.avatar.url
+            # Fallback: construir URL completa usando settings
+            from django.conf import settings
+            if hasattr(settings, 'BACKEND_URL'):
+                base_url = settings.BACKEND_URL
+            else:
+                base_url = 'https://twitter-b01m.onrender.com'
+            return f"{base_url}{obj.avatar.url}"
         return None
 
     def update(self, instance, validated_data):

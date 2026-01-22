@@ -62,13 +62,13 @@ def profile(request):
     print(f"🔍 Profile request: {request.method} for user {user.email}")
 
     if request.method == 'GET':
-        serializer = UserUpdateSerializer(user)
+        serializer = UserUpdateSerializer(user, context={'request': request})
         print(f"📤 Sending profile data: {serializer.data}")
         return Response(serializer.data)
 
     if request.method == 'PATCH':
         print(f"📝 Update data received: {request.data}")
-        serializer = UserUpdateSerializer(user, data=request.data, partial=True)
+        serializer = UserUpdateSerializer(user, data=request.data, partial=True, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             print(f"✅ Profile updated successfully: {serializer.data}")
