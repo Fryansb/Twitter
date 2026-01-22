@@ -34,15 +34,17 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    
+    # Cloudinary DEVE vir ANTES de staticfiles
+    "cloudinary_storage",
     "django.contrib.staticfiles",
+    "cloudinary",
 
     # Terceiros
     "corsheaders",
     "rest_framework",
     "rest_framework.authtoken",
     "rest_framework_simplejwt",
-    "cloudinary_storage",
-    "cloudinary",
 
     # Apps do projeto
     "tweets",
