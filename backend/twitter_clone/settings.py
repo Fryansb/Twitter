@@ -68,14 +68,37 @@ MIDDLEWARE = [
 # 🌐 CORS / CSRF
 # --------------------------------------------------------------
 
+# Permitir CORS de qualquer origem Vercel (para preview e produção)
 CORS_ALLOW_ALL_ORIGINS = False
 
+# Função para verificar origens do Vercel dinamicamente
+def cors_origin_regex_whitelist_func(origin):
+    import re
+    # Permitir localhost e qualquer domínio vercel.app
+    allowed_patterns = [
+        r'^http://localhost:\d+$',
+        r'^http://127\.0\.0\.1:\d+$',
+        r'^https://.*\.vercel\.app$',  # Qualquer subdomínio do Vercel
+        r'^https://twitter-iota-sepia\.vercel\.app$',  # Produção específica
+    ]
+    for pattern in allowed_patterns:
+        if re.match(pattern, origin):
+            return True
+    return False
+
+# Usar regex para permitir origens dinâmicas do Vercel
+CORS_ORIGIN_WHITELIST = []
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://localhost:5173",
     "http://127.0.0.1:3000",
     "http://127.0.0.1:5173",
-    "https://twitter-iota-sepia.vercel.app",  # Frontend em produção
+    "https://twitter-iota-sepia.vercel.app",
+]
+
+# Adicionar suporte para regex
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://.*\.vercel\.app$",  # Qualquer preview do Vercel
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -102,7 +125,8 @@ CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:3000",
     "http://127.0.0.1:5173",
-    "https://twitter-iota-sepia.vercel.app",  # Frontend em produção
+    "https://twitter-iota-sepia.vercel.app",
+    "https://*.vercel.app",  # Permitir todos os previews do Vercel
 ]
 
 # --------------------------------------------------------------
