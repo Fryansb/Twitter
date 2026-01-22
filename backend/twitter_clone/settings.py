@@ -81,8 +81,6 @@ CORS_ALLOWED_ORIGINS = [
 
 # Adicionar suporte para regex do Vercel
 CORS_ALLOWED_ORIGIN_REGEXES = [
-    r"^https://.*\.vercel\.app$",
-]
     r"^https://.*\.vercel\.app$",  # Qualquer preview do Vercel
 ]
 
